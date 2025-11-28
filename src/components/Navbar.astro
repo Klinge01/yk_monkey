@@ -7,20 +7,25 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = getTranslation(lang);
+// Get base path for GitHub Pages
+const base = import.meta.env.BASE_URL || '/';
+const basePath = base.endsWith('/') ? base : base + '/';
 const alternateLang = lang === 'de' ? 'en' : 'de';
 const currentPath = Astro.url.pathname;
-const alternateUrl = currentPath.replace(`/${lang}`, `/${alternateLang}`);
+// Replace language in path while preserving base path
+const alternateUrl = currentPath.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
 
 const navLinks = [
-  { href: `/${lang}/`, label: t.nav.home },
-  { href: `/${lang}/about/`, label: t.nav.about },
-  { href: `/${lang}/services/`, label: t.nav.services },
-  { href: `/${lang}/contact/`, label: t.nav.contact },
+  { href: `${basePath}${lang}/`, label: t.nav.home },
+  { href: `${basePath}${lang}/about/`, label: t.nav.about },
+  { href: `${basePath}${lang}/services/`, label: t.nav.services },
+  { href: `${basePath}${lang}/contact/`, label: t.nav.contact },
 ];
 
 function isActive(href: string): boolean {
-  if (href === `/${lang}/`) {
-    return currentPath === `/${lang}/` || currentPath === `/${lang}`;
+  // Check if current path matches the href (accounting for base path)
+  if (href === `${basePath}${lang}/` || href === `/${lang}/`) {
+    return currentPath === `${basePath}${lang}/` || currentPath === `/${lang}/` || currentPath === `/${lang}` || currentPath === `${basePath}${lang}`;
   }
   return currentPath.startsWith(href);
 }
@@ -34,7 +39,7 @@ function isActive(href: string): boolean {
     <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
       <a
-        href={`/${lang}/`}
+        href={`${basePath}${lang}/`}
         class="group flex items-center gap-3 transition-transform hover:scale-105"
       >
         <div
@@ -86,7 +91,7 @@ function isActive(href: string): boolean {
 
         <!-- CTA Button -->
         <a
-          href={`/${lang}/contact/`}
+          href={`${basePath}${lang}/contact/`}
           class="glow-hover rounded-full bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:from-primary-400 hover:to-primary-500"
         >
           {t.hero.cta}
@@ -157,7 +162,7 @@ function isActive(href: string): boolean {
           🌐 {alternateLang === 'de' ? 'Deutsch' : 'English'}
         </a>
         <a
-          href={`/${lang}/contact/`}
+          href={`${basePath}${lang}/contact/`}
           class="flex-1 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-center text-sm font-semibold text-white"
         >
           {t.hero.cta}

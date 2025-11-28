@@ -7,6 +7,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = getTranslation(lang);
+// Get base path for GitHub Pages
+const base = import.meta.env.BASE_URL || '/';
+const basePath = base.endsWith('/') ? base : base + '/';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -22,7 +25,7 @@ const currentYear = new Date().getFullYear();
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand Column -->
       <div class="lg:col-span-2">
-        <a href={`/${lang}/`} class="group inline-flex items-center gap-3">
+        <a href={`${basePath}${lang}/`} class="group inline-flex items-center gap-3">
           <div
             class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500"
           >
@@ -81,7 +84,7 @@ const currentYear = new Date().getFullYear();
         <ul class="mt-4 space-y-3">
           <li>
             <a
-              href={`/${lang}/`}
+              href={`${basePath}${lang}/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.nav.home}
@@ -89,7 +92,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href={`/${lang}/about/`}
+              href={`${basePath}${lang}/about/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.nav.about}
@@ -97,7 +100,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href={`/${lang}/services/`}
+              href={`${basePath}${lang}/services/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.nav.services}
@@ -105,7 +108,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href={`/${lang}/contact/`}
+              href={`${basePath}${lang}/contact/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.nav.contact}
@@ -122,7 +125,7 @@ const currentYear = new Date().getFullYear();
         <ul class="mt-4 space-y-3">
           <li>
             <a
-              href={`/${lang}/privacy/`}
+              href={`${basePath}${lang}/privacy/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.footer.privacy}
@@ -130,7 +133,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href={`/${lang}/imprint/`}
+              href={`${basePath}${lang}/imprint/`}
               class="text-dark-300 transition-colors hover:text-primary-400"
             >
               {t.footer.imprint}

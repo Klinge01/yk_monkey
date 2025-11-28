@@ -8,6 +8,9 @@ import { getTranslation } from '@i18n/translations';
 
 const lang = 'de';
 const t = getTranslation(lang);
+// Get base path for links (needed for GitHub Pages)
+const base = import.meta.env.BASE_URL || '/';
+const basePath = base.endsWith('/') ? base : base + '/';
 ---
 
 <Layout
@@ -112,7 +115,7 @@ const t = getTranslation(lang);
             {t.about.story.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
           </div>
           <div class="mt-10">
-            <Button href={`/${lang}/contact/`}>
+            <Button href={`${basePath}${lang}/contact/`}>
               Lass uns reden
               <svg
                 class="h-5 w-5"
@@ -301,10 +304,10 @@ const t = getTranslation(lang);
             gemeinsam deinen Weg zur Transformation starten.
           </p>
           <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button href={`/${lang}/services/`} size="lg">
+            <Button href={`${basePath}${lang}/services/`} size="lg">
               Meine Leistungen
             </Button>
-            <Button href={`/${lang}/contact/`} variant="outline" size="lg">
+            <Button href={`${basePath}${lang}/contact/`} variant="outline" size="lg">
               Kontakt aufnehmen
             </Button>
           </div>
