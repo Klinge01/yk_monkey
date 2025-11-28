@@ -365,8 +365,21 @@ export function getTranslation(lang: Language) {
 }
 
 export function getLanguageFromUrl(url: URL): Language {
-  const [, lang] = url.pathname.split('/');
-  if (lang === 'en') return 'en';
+  // Remove base path if present (for GitHub Pages)
+  // Base path is typically something like /yk_monkey_public/
+  let pathname = url.pathname;
+  // Check if pathname starts with a known base path pattern (repo name)
+  // During static build, Astro.url.pathname doesn't include base, but at runtime it might
+  // So we look for language codes directly
+  const pathParts = pathname.split('/').filter(Boolean);
+  
+  // Find the first language code in the path
+  for (const part of pathParts) {
+    if (part === 'en') return 'en';
+    if (part === 'de') return 'de';
+  }
+  
+  // Default to German if no language found
   return 'de';
 }
 

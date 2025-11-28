@@ -12,8 +12,31 @@ const base = import.meta.env.BASE_URL || '/';
 const basePath = base.endsWith('/') ? base : base + '/';
 const alternateLang = lang === 'de' ? 'en' : 'de';
 const currentPath = Astro.url.pathname;
-// Replace language in path while preserving base path
-const alternateUrl = currentPath.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
+
+// Construct alternate URL: replace language code in the current path
+// During static build, Astro.url.pathname is like /de/about/ (without base path)
+// Remove base path if present, replace language, then add base path back
+let pathWithoutBase = currentPath;
+if (basePath !== '/' && currentPath.startsWith(basePath)) {
+  // Remove base path: /yk_monkey_public/de/about/ -> /de/about/
+  pathWithoutBase = '/' + currentPath.slice(basePath.length);
+}
+
+// Replace language code
+let alternatePath = pathWithoutBase;
+if (alternatePath.includes(`/${lang}/`)) {
+  alternatePath = alternatePath.replace(`/${lang}/`, `/${alternateLang}/`);
+} else if (alternatePath.endsWith(`/${lang}`)) {
+  alternatePath = alternatePath.replace(`/${lang}`, `/${alternateLang}/`);
+} else if (alternatePath === `/${lang}`) {
+  alternatePath = `/${alternateLang}/`;
+} else {
+  // Fallback: construct from base path
+  alternatePath = `/${alternateLang}/`;
+}
+
+// Add base path prefix (only if not already present)
+const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\//, '')}` : alternatePath;
 
 const navLinks = [
   { href: `${basePath}${lang}/`, label: t.nav.home },
