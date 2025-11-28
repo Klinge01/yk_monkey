@@ -140,7 +140,7 @@ const alternateUrl = Astro.url.pathname.replace(`/${lang}`, `/${alternateLang}`)
 
     <!-- Language detection script -->
     <script>
-      // Get base path from the page (e.g., '/YAK_Site/' or '/')
+      // Get base path from the page (e.g., '/ykmonkey/' or '/')
       const basePath = import.meta.env.BASE_URL || '/';
       const currentPath = window.location.pathname;
       const basePathNormalized = basePath.endsWith('/') ? basePath : basePath + '/';

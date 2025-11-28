@@ -1,8 +1,8 @@
 {
-  "name": "yak-coaching",
+  "name": "ykmonkey",
   "type": "module",
   "version": "1.0.0",
-  "description": "YAK Coaching – Yannick Aldrian-Kickinger | Bodybuilding & Personal Training Website",
+  "description": "YKMonkey – Yannick Aldrian-Kickinger | Bodybuilding & Personal Training Website",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

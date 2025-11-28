@@ -1,4 +1,4 @@
-# YAK Coaching – Yannick Aldrian-Kickinger
+# YKMonkey – Yannick Aldrian-Kickinger
 
 A modern, sleek website for **Yannick Aldrian-Kickinger**, a bodybuilder and fitness coach based in Austria. Features bilingual support (German/English), glassmorphism design, and a focus on conversion.
 
@@ -142,7 +142,7 @@ Update the following in contact pages (`src/pages/de/contact.astro` and `src/pag
 
 ```javascript
 const WHATSAPP_NUMBER = '+43XXXXXXXXXX';  // Yannick's Austrian phone number
-const EMAIL_ADDRESS = 'yannick@yak-coaching.at'; // Yannick's email
+const EMAIL_ADDRESS = 'yannick@ykmonkey.at'; // Yannick's email
 ```
 
 ### Social Media Links
@@ -172,6 +172,6 @@ Private project - All rights reserved.
 
 ---
 
-**YAK Coaching** – Yannick Aldrian-Kickinger  
+**YKMonkey** – Yannick Aldrian-Kickinger  
 Made with ❤️ in Austria 🇦🇹
 
