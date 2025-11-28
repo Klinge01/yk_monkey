@@ -1,0 +1,101 @@
+---
+import Layout from '@layouts/Layout.astro';
+import GlassCard from '@components/GlassCard.astro';
+---
+
+<Layout
+  title="Impressum | YAK Coaching – Yannick Aldrian-Kickinger"
+  description="Impressum für YAK Coaching – Yannick Aldrian-Kickinger"
+>
+  <section class="relative overflow-hidden pt-32 pb-24">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <h1
+        class="font-display text-4xl uppercase tracking-wide text-white md:text-5xl"
+      >
+        Impressum
+      </h1>
+
+      <GlassCard class="mt-12 prose prose-invert max-w-none" hover={false}>
+        <div class="space-y-8 text-dark-300">
+          <section>
+            <h2 class="font-display text-2xl text-white">Angaben gemäß § 5 ECG</h2>
+            <p>
+              <strong class="text-white">Yannick Aldrian-Kickinger</strong><br />
+              Bodybuilding Coach / Personal Trainer
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">Kontaktadresse</h2>
+            <p>
+              [Straße und Hausnummer]<br />
+              [PLZ] Wien<br />
+              Österreich
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">Kontakt</h2>
+            <p>
+              E-Mail: [email@example.com]<br />
+              Telefon: [Telefonnummer]<br />
+              WhatsApp: [Telefonnummer]
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              Unternehmensgegenstand
+            </h2>
+            <p>Bodybuilding Coaching, Personal Training, Ernährungsberatung, Wettkampfvorbereitung</p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              Anwendbare Rechtsvorschriften
+            </h2>
+            <p>Gewerbeordnung: www.ris.bka.gv.at</p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              EU-Streitschlichtung
+            </h2>
+            <p>
+              Die Europäische Kommission stellt eine Plattform zur
+              Online-Streitbeilegung (OS) bereit:
+              <a
+                href="https://ec.europa.eu/consumers/odr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary-400 hover:underline"
+              >
+                https://ec.europa.eu/consumers/odr/
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">Haftungsausschluss</h2>
+            <p>
+              Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine
+              Haftung für die Inhalte externer Links. Für den Inhalt der
+              verlinkten Seiten sind ausschließlich deren Betreiber
+              verantwortlich.
+            </p>
+          </section>
+
+          <section>
+            <p class="text-sm text-dark-400">
+              <em>
+                Hinweis: Bitte füllen Sie alle Platzhalter [in eckigen Klammern]
+                mit Ihren tatsächlichen Daten aus.
+              </em>
+            </p>
+          </section>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+</Layout>
+

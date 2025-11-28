@@ -1,0 +1,407 @@
+---
+import Layout from '@layouts/Layout.astro';
+import GlassCard from '@components/GlassCard.astro';
+import Button from '@components/Button.astro';
+import SectionHeading from '@components/SectionHeading.astro';
+import { getTranslation } from '@i18n/translations';
+
+const lang = 'en';
+const t = getTranslation(lang);
+---
+
+<Layout
+  title="YAK Coaching – Personal Training & Fitness Coaching | Austria"
+  description="Personal training and fitness coaching in Austria. Over 13 years of experience, international competition placements. Individual support for muscle building, fat loss and more."
+>
+  <!-- Hero Section -->
+  <section class="relative min-h-screen overflow-hidden pt-20">
+    <!-- Background Elements (GPU-optimized gradients instead of blur) -->
+    <div 
+      class="absolute inset-0"
+      style="background: radial-gradient(ellipse 50% 50% at 75% 25%, rgba(239, 85, 68, 0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 25% 75%, rgba(234, 179, 8, 0.08) 0%, transparent 70%);"
+    >
+    </div>
+
+    <div
+      class="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-4 sm:px-6 lg:px-8"
+    >
+      <div class="grid w-full gap-12 lg:grid-cols-2 lg:gap-8">
+        <!-- Text Content -->
+        <div
+          class="flex flex-col justify-center text-center lg:text-left"
+          style="animation: slideUp 0.8s ease-out"
+        >
+          <span
+            class="mb-6 inline-block rounded-full bg-primary-500/10 px-4 py-2 text-sm font-medium text-primary-400"
+          >
+            ⚡ {t.hero.tagline}
+          </span>
+          <h1
+            class="font-display text-5xl uppercase leading-tight tracking-wide text-white sm:text-6xl lg:text-7xl xl:text-8xl"
+          >
+            {t.hero.headline}
+            <br />
+            <span class="gradient-text">{t.hero.headlineAccent}</span>
+          </h1>
+          <p class="mt-6 max-w-xl text-lg text-dark-300 lg:text-xl">
+            {t.hero.description}
+          </p>
+          <div
+            class="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+          >
+            <Button href={`/${lang}/contact/`} size="lg">
+              {t.hero.cta}
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </Button>
+            <Button href={`/${lang}/services/`} variant="outline" size="lg">
+              {t.hero.ctaSecondary}
+            </Button>
+          </div>
+
+          <!-- Trust indicators -->
+          <div
+            class="mt-16 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-8 lg:justify-start"
+          >
+            <div class="flex items-center gap-2 text-dark-300">
+              <svg class="h-5 w-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>13+ Years Experience</span>
+            </div>
+            <div class="flex items-center gap-2 text-dark-300">
+              <svg class="h-5 w-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>International Placements</span>
+            </div>
+            <div class="flex items-center gap-2 text-dark-300">
+              <svg class="h-5 w-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Based in Austria</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Video -->
+        <div
+          class="relative flex items-center justify-center"
+          style="animation: fadeIn 1s ease-out 0.3s both"
+        >
+          <div class="relative w-full max-w-lg">
+            <!-- Decorative glow (GPU-optimized) -->
+            <div
+              class="absolute -inset-4 rounded-3xl opacity-50"
+              style="background: linear-gradient(135deg, rgba(239, 85, 68, 0.3) 0%, transparent 50%, rgba(234, 179, 8, 0.2) 100%); filter: blur(20px);"
+            >
+            </div>
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              class="relative z-10 aspect-[3/4] w-full rounded-2xl object-cover shadow-2xl shadow-primary-500/20"
+            >
+              <source src="/videos/Montage_Chest_1.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-dark-400"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading title={t.features.title} subtitle={t.features.subtitle} />
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {
+          t.features.items.map((feature, index) => (
+            <GlassCard
+              gradient
+              class="group"
+              style={`animation: scaleIn 0.5s ease-out ${index * 0.1}s both`}
+            >
+              <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 transition-colors group-hover:from-primary-500/30 group-hover:to-accent-500/30">
+                <svg
+                  class="h-7 w-7 text-primary-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d={
+                      index === 0
+                        ? 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
+                        : index === 1
+                          ? 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4'
+                          : index === 2
+                            ? 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                            : 'M13 10V3L4 14h7v7l9-11h-7z'
+                    }
+                  />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white">{feature.title}</h3>
+              <p class="mt-3 text-dark-300">{feature.description}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Who Is This For Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title="Who Is This For?"
+        subtitle="Whether beginner or advanced – I help you reach your goals."
+      />
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Muscle Building -->
+        <GlassCard gradient class="group text-center">
+          <div
+            class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/20"
+          >
+            <svg
+              class="h-8 w-8 text-primary-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Muscle Building</h3>
+          <p class="mt-3 text-dark-300">
+            You want to build muscle and get stronger? With the right
+            training and nutrition you reach your goal effectively.
+          </p>
+        </GlassCard>
+
+        <!-- Fat Loss -->
+        <GlassCard gradient class="group text-center">
+          <div
+            class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/20"
+          >
+            <svg
+              class="h-8 w-8 text-primary-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Fat Loss</h3>
+          <p class="mt-3 text-dark-300">
+            Lose weight without losing muscle? With a well-designed plan
+            you achieve sustainable results without crash diets.
+          </p>
+        </GlassCard>
+
+        <!-- Healthier Lifestyle -->
+        <GlassCard gradient class="group text-center">
+          <div
+            class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/20"
+          >
+            <svg
+              class="h-8 w-8 text-primary-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Healthier Lifestyle</h3>
+          <p class="mt-3 text-dark-300">
+            You want to get fitter and feel better? Together we find
+            a way that fits your daily life.
+          </p>
+        </GlassCard>
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button href={`/${lang}/services/`} variant="outline">
+          View Services
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section (Coming Soon) -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title={t.testimonials.title}
+        subtitle={t.testimonials.subtitle}
+      />
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          [
+            {
+              initials: '?',
+              role: 'Your feedback here',
+              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            },
+            {
+              initials: '?',
+              role: 'Your feedback here',
+              text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            },
+            {
+              initials: '?',
+              role: 'Your feedback here',
+              text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+            },
+          ].map((testimonial, index) => (
+            <GlassCard
+              class="group relative overflow-hidden opacity-60"
+              style={`animation: slideUp 0.6s ease-out ${index * 0.15}s both`}
+            >
+              {/* Quote icon */}
+              <div class="absolute -right-4 -top-4 text-primary-500/10">
+                <svg class="h-24 w-24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+
+              {/* Content */}
+              <div class="relative">
+                <div class="flex items-center gap-4">
+                  <div class="flex h-14 w-14 items-center justify-center rounded-full bg-dark-700 font-display text-xl text-dark-400">
+                    {testimonial.initials}
+                  </div>
+                  <div>
+                    <div class="font-semibold text-dark-400">
+                      Placeholder
+                    </div>
+                    <div class="text-sm text-dark-500">{testimonial.role}</div>
+                  </div>
+                </div>
+                <p class="mt-6 text-dark-400 leading-relaxed italic">
+                  "{testimonial.text}"
+                </p>
+              </div>
+            </GlassCard>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-dark-400">
+          Real client feedback coming soon. Be one of the first!
+        </p>
+        <div class="mt-6">
+          <Button href={`/${lang}/contact/`} variant="outline">
+            Get Started
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <GlassCard
+        class="relative overflow-hidden p-8 text-center md:p-12 lg:p-16"
+        hover={false}
+      >
+        <!-- Background gradient -->
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10"
+        >
+        </div>
+
+        <!-- Content -->
+        <div class="relative">
+          <h2
+            class="font-display text-3xl uppercase tracking-wide text-white md:text-4xl lg:text-5xl"
+          >
+            {t.cta.title}
+          </h2>
+          <p class="mx-auto mt-6 max-w-2xl text-lg text-dark-300">
+            {t.cta.description}
+          </p>
+          <div class="mt-10">
+            <Button href={`/${lang}/contact/`} size="lg">
+              {t.cta.button}
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+</Layout>
+

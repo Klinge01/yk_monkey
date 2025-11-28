@@ -1,0 +1,316 @@
+---
+import Layout from '@layouts/Layout.astro';
+import GlassCard from '@components/GlassCard.astro';
+import ImagePlaceholder from '@components/ImagePlaceholder.astro';
+import Button from '@components/Button.astro';
+import SectionHeading from '@components/SectionHeading.astro';
+import { getTranslation } from '@i18n/translations';
+
+const lang = 'en';
+const t = getTranslation(lang);
+---
+
+<Layout
+  title="About Yannick Aldrian-Kickinger | YAK Coaching – Nutrition Coach from Austria"
+  description="Learn more about Yannick Aldrian-Kickinger – nutrition coach for bodybuilders and combat athletes from Austria. Years of experience, battle-tested methods."
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-32 pb-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <!-- Image -->
+        <div
+          class="relative order-2 lg:order-1"
+          style="animation: fadeIn 0.8s ease-out"
+        >
+          <div class="relative">
+            <div
+              class="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 blur-2xl"
+            >
+            </div>
+            <ImagePlaceholder
+              description="Professional portrait of Yannick. Bodybuilding pose or lifestyle shot showcasing his athleticism and professionalism."
+              aspectRatio="portrait"
+              icon="user"
+              class="relative z-10 shadow-2xl"
+            />
+          </div>
+          <!-- Floating badges -->
+          <div
+            class="glass absolute -right-4 top-8 rounded-xl p-4 shadow-xl"
+            style="animation: float 6s ease-in-out infinite"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/20"
+              >
+                <svg
+                  class="h-5 w-5 text-primary-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold text-white">13+ Years</div>
+                <div class="text-xs text-dark-400">Experience</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="glass absolute -left-4 bottom-12 rounded-xl p-4 shadow-xl"
+            style="animation: float 6s ease-in-out 2s infinite"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-500/20"
+              >
+                <svg
+                  class="h-5 w-5 text-accent-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold text-white">International</div>
+                <div class="text-xs text-dark-400">Placements</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Content -->
+        <div
+          class="order-1 lg:order-2"
+          style="animation: slideUp 0.8s ease-out"
+        >
+          <span
+            class="mb-4 inline-block rounded-full bg-primary-500/10 px-4 py-2 text-sm font-medium text-primary-400"
+          >
+            👋 {t.about.subtitle}
+          </span>
+          <h1
+            class="font-display text-4xl uppercase tracking-wide text-white md:text-5xl lg:text-6xl"
+          >
+            {t.about.title}
+          </h1>
+          <div class="mt-8 space-y-6 text-lg text-dark-300">
+            {t.about.story.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <div class="mt-10">
+            <Button href={`/${lang}/contact/`}>
+              Let's Talk
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title={t.about.credentials.title}
+        subtitle="The foundation for professional and safe training."
+      />
+
+      <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          t.about.credentials.items.map((item, index) => (
+            <GlassCard
+              class="group flex items-center gap-4"
+              style={`animation: scaleIn 0.5s ease-out ${index * 0.1}s both`}
+            >
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500">
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <span class="text-lg font-medium text-white">{item}</span>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <span
+            class="mb-4 inline-block rounded-full bg-accent-500/10 px-4 py-2 text-sm font-medium text-accent-400"
+          >
+            💡 My Philosophy
+          </span>
+          <h2
+            class="font-display text-4xl uppercase tracking-wide text-white md:text-5xl"
+          >
+            {t.about.philosophy.title}
+          </h2>
+          <p class="mt-6 text-lg text-dark-300">
+            {t.about.philosophy.text}
+          </p>
+          <div class="mt-8 space-y-4">
+            {
+              [
+                'No crash diets – sustainable nutrition',
+                'No unrealistic promises – honest results',
+                'No cookie-cutter plans – individual support',
+              ].map((point) => (
+                <div class="flex items-center gap-3">
+                  <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/20">
+                    <svg
+                      class="h-4 w-4 text-primary-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <span class="text-dark-200">{point}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <ImagePlaceholder
+            description="Training in action – coaching moment with a client"
+            aspectRatio="square"
+            icon="image"
+            class="shadow-xl"
+          />
+          <ImagePlaceholder
+            description="Nutrition coaching – planning a healthy meal"
+            aspectRatio="square"
+            icon="image"
+            class="mt-8 shadow-xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title="Insights"
+        subtitle="Images from my training routine and success stories."
+      />
+
+      <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ImagePlaceholder
+          description="Gym atmosphere – modern equipment and training area"
+          aspectRatio="square"
+          icon="gallery"
+          class="shadow-xl lg:col-span-2 lg:row-span-2"
+        />
+        <ImagePlaceholder
+          description="Outdoor training – park exercises or running"
+          aspectRatio="square"
+          icon="image"
+          class="shadow-xl"
+        />
+        <ImagePlaceholder
+          description="Mobility exercises – stretching and flexibility"
+          aspectRatio="square"
+          icon="image"
+          class="shadow-xl"
+        />
+        <ImagePlaceholder
+          description="Group photo – community event or group training"
+          aspectRatio="square"
+          icon="image"
+          class="shadow-xl"
+        />
+        <ImagePlaceholder
+          description="Success moment – client celebrating goal achievement"
+          aspectRatio="square"
+          icon="image"
+          class="shadow-xl"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <GlassCard
+        class="relative overflow-hidden p-8 text-center md:p-12 lg:p-16"
+        hover={false}
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10"
+        >
+        </div>
+        <div class="relative">
+          <h2
+            class="font-display text-3xl uppercase tracking-wide text-white md:text-4xl lg:text-5xl"
+          >
+            Ready to Start?
+          </h2>
+          <p class="mx-auto mt-6 max-w-2xl text-lg text-dark-300">
+            Schedule your free initial consultation now and let's start your
+            transformation journey together.
+          </p>
+          <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button href={`/${lang}/services/`} size="lg">
+              My Services
+            </Button>
+            <Button href={`/${lang}/contact/`} variant="outline" size="lg">
+              Get in Touch
+            </Button>
+          </div>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+</Layout>
+

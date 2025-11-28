@@ -1,0 +1,108 @@
+---
+import Layout from '@layouts/Layout.astro';
+import GlassCard from '@components/GlassCard.astro';
+---
+
+<Layout
+  title="Datenschutzerklärung | YAK Coaching – Yannick Aldrian-Kickinger"
+  description="Datenschutzerklärung für YAK Coaching – Yannick Aldrian-Kickinger"
+>
+  <section class="relative overflow-hidden pt-32 pb-24">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <h1
+        class="font-display text-4xl uppercase tracking-wide text-white md:text-5xl"
+      >
+        Datenschutzerklärung
+      </h1>
+
+      <GlassCard class="mt-12 prose prose-invert max-w-none" hover={false}>
+        <div class="space-y-8 text-dark-300">
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              1. Datenschutz auf einen Blick
+            </h2>
+            <h3 class="mt-4 text-lg font-semibold text-white">
+              Allgemeine Hinweise
+            </h3>
+            <p>
+              Die folgenden Hinweise geben einen einfachen Überblick darüber,
+              was mit Ihren personenbezogenen Daten passiert, wenn Sie diese
+              Website besuchen.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              2. Verantwortliche Stelle
+            </h2>
+            <p>
+              <strong class="text-white">[Name des Coaches]</strong><br />
+              [Adresse]<br />
+              [PLZ Stadt]<br />
+              Österreich
+            </p>
+            <p class="mt-4">
+              E-Mail: [email@example.com]<br />
+              Telefon: [Telefonnummer]
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              3. Datenerfassung auf dieser Website
+            </h2>
+            <h3 class="mt-4 text-lg font-semibold text-white">
+              Server-Log-Dateien
+            </h3>
+            <p>
+              Der Provider der Seiten erhebt und speichert automatisch
+              Informationen in so genannten Server-Log-Dateien, die Ihr Browser
+              automatisch an uns übermittelt. Dies sind:
+            </p>
+            <ul class="mt-4 list-inside list-disc space-y-2">
+              <li>Browsertyp und Browserversion</li>
+              <li>Verwendetes Betriebssystem</li>
+              <li>Referrer URL</li>
+              <li>Hostname des zugreifenden Rechners</li>
+              <li>Uhrzeit der Serveranfrage</li>
+              <li>IP-Adresse</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">
+              4. Kontaktaufnahme
+            </h2>
+            <p>
+              Wenn Sie uns per E-Mail oder WhatsApp kontaktieren, werden Ihre
+              Angaben inklusive der von Ihnen dort angegebenen Kontaktdaten
+              zwecks Bearbeitung der Anfrage und für den Fall von
+              Anschlussfragen bei uns gespeichert.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-display text-2xl text-white">5. Ihre Rechte</h2>
+            <p>
+              Sie haben jederzeit das Recht auf unentgeltliche Auskunft über
+              Ihre gespeicherten personenbezogenen Daten, deren Herkunft und
+              Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf
+              Berichtigung oder Löschung dieser Daten.
+            </p>
+          </section>
+
+          <section>
+            <p class="text-sm text-dark-400">
+              <em>
+                Hinweis: Dies ist ein Platzhalter für eine
+                Datenschutzerklärung. Bitte lassen Sie diese von einem
+                Rechtsanwalt erstellen, um rechtliche Konformität sicherzustellen.
+              </em>
+            </p>
+          </section>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+</Layout>
+

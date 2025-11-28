@@ -1,0 +1,453 @@
+---
+import Layout from '@layouts/Layout.astro';
+import GlassCard from '@components/GlassCard.astro';
+import ImagePlaceholder from '@components/ImagePlaceholder.astro';
+import Button from '@components/Button.astro';
+import SectionHeading from '@components/SectionHeading.astro';
+import { getTranslation } from '@i18n/translations';
+
+const lang = 'en';
+const t = getTranslation(lang);
+---
+
+<Layout
+  title="Personal Training & Coaching Packages | YAK Coaching – Yannick Aldrian-Kickinger"
+  description="Personal training and fitness coaching in Austria. Individual training plans for muscle building, fat loss and performance improvement. Over 13 years of experience."
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-32 pb-16">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+      <span
+        class="mb-4 inline-block rounded-full bg-primary-500/10 px-4 py-2 text-sm font-medium text-primary-400"
+        style="animation: fadeIn 0.6s ease-out"
+      >
+        💪 Invest in Yourself
+      </span>
+      <h1
+        class="font-display text-4xl uppercase tracking-wide text-white md:text-5xl lg:text-6xl"
+        style="animation: slideUp 0.8s ease-out"
+      >
+        {t.services.title}
+      </h1>
+      <p
+        class="mx-auto mt-6 max-w-2xl text-lg text-dark-300"
+        style="animation: slideUp 0.8s ease-out 0.1s both"
+      >
+        {t.services.subtitle}
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="relative py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-3">
+        {
+          t.services.packages.map((pkg, index) => (
+            <div
+              class={`relative ${pkg.popular ? 'lg:-mt-8' : ''}`}
+              style={`animation: scaleIn 0.6s ease-out ${index * 0.15}s both`}
+            >
+              {pkg.popular && (
+                <div class="absolute -top-4 left-1/2 z-10 -translate-x-1/2">
+                  <span class="rounded-full bg-gradient-to-r from-primary-500 to-accent-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <GlassCard
+                class={`relative h-full ${pkg.popular ? 'border-primary-500/30 bg-gradient-to-b from-primary-500/5 to-transparent' : ''}`}
+                hover={true}
+              >
+                {/* Decorative gradient for popular */}
+                {pkg.popular && (
+                  <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10" />
+                )}
+
+                <div class="relative">
+                  {/* Package Name */}
+                  <h3 class="font-display text-2xl uppercase tracking-wide text-white">
+                    {pkg.name}
+                  </h3>
+                  <p class="mt-2 text-dark-400">{pkg.description}</p>
+
+                  {/* Price */}
+                  <div class="mt-6 flex items-baseline gap-1">
+                    <span class="text-sm text-dark-400">€</span>
+                    <span class="font-display text-5xl text-white">
+                      {pkg.price}
+                    </span>
+                    <span class="text-dark-400">{pkg.period}</span>
+                  </div>
+
+                  {/* Features */}
+                  <ul class="mt-8 space-y-4">
+                    {pkg.features.map((feature) => (
+                      <li class="flex items-start gap-3">
+                        <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/20">
+                          <svg
+                            class="h-4 w-4 text-primary-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        </div>
+                        <span class="text-dark-200">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <div class="mt-10">
+                    <Button
+                      href={`/${lang}/contact/`}
+                      variant={pkg.popular ? 'primary' : 'outline'}
+                      fullWidth
+                    >
+                      {t.services.cta}
+                    </Button>
+                  </div>
+                </div>
+              </GlassCard>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- What's Included Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title="What You Get"
+        subtitle="Science-based methods and motivating support."
+      />
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          [
+            {
+              icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
+              title: 'Individual Training Plan',
+              description:
+                'Tailored to your goal, your level and your possibilities – from beginner to athlete.',
+            },
+            {
+              icon: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4',
+              title: 'Nutrition Recommendations',
+              description:
+                'Practical tips for your nutrition that fit your daily life and your goals.',
+            },
+            {
+              icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+              title: 'Progress Tracking',
+              description:
+                'Regular check-ins and adjustments so you make continuous progress.',
+            },
+            {
+              icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
+              title: 'Direct Contact',
+              description:
+                'Via WhatsApp or video call – quick answers and motivating support.',
+            },
+            {
+              icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+              title: 'Competition Experience',
+              description:
+                'Over 13 years of training and international competition placements – I know what works.',
+            },
+            {
+              icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+              title: 'Safety & Effectiveness',
+              description:
+                'Training that is fun while being safe and effective.',
+            },
+          ].map((item, index) => (
+            <GlassCard
+              gradient
+              class="group"
+              style={`animation: fadeIn 0.6s ease-out ${index * 0.1}s both`}
+            >
+              <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 transition-colors group-hover:from-primary-500/30 group-hover:to-accent-500/30">
+                <svg
+                  class="h-7 w-7 text-primary-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d={item.icon}
+                  />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              <p class="mt-3 text-dark-300">{item.description}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title="How We Start"
+        subtitle="In 4 simple steps to your personal training plan."
+      />
+
+      <div class="relative mt-16">
+        <!-- Connection line -->
+        <div
+          class="absolute left-8 top-0 hidden h-full w-px bg-gradient-to-b from-primary-500/50 via-accent-500/50 to-primary-500/50 md:left-1/2 md:block"
+        >
+        </div>
+
+        <div class="space-y-12 md:space-y-0">
+          {
+            [
+              {
+                step: '01',
+                title: 'Free Consultation',
+                description:
+                  'We get to know each other and discuss your goals, level, and preferences. Completely free.',
+              },
+              {
+                step: '02',
+                title: 'Analysis & Planning',
+                description:
+                  'Based on our conversation, I create your individual training and nutrition plan.',
+              },
+              {
+                step: '03',
+                title: 'Start & Training',
+                description:
+                  'You start with your plan – with my full support every step of the way.',
+              },
+              {
+                step: '04',
+                title: 'Continuous Optimization',
+                description:
+                  'Regular check-ins and adjustments ensure constant progress.',
+              },
+            ].map((item, index) => (
+              <div
+                class={`relative flex flex-col md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+                style={`animation: slideUp 0.6s ease-out ${index * 0.15}s both`}
+              >
+                <div class="flex md:w-1/2 md:justify-end md:pr-12">
+                  {index % 2 === 0 && (
+                    <GlassCard class="max-w-md">
+                      <div class="gradient-text mb-2 font-display text-3xl">
+                        {item.step}
+                      </div>
+                      <h3 class="text-xl font-semibold text-white">
+                        {item.title}
+                      </h3>
+                      <p class="mt-2 text-dark-300">{item.description}</p>
+                    </GlassCard>
+                  )}
+                </div>
+
+                {/* Center dot */}
+                <div class="absolute left-8 top-0 z-10 hidden h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-accent-500 md:left-1/2 md:flex">
+                  <div class="h-2 w-2 rounded-full bg-white" />
+                </div>
+
+                <div class="flex md:w-1/2 md:pl-12">
+                  {index % 2 === 1 && (
+                    <GlassCard class="max-w-md">
+                      <div class="gradient-text mb-2 font-display text-3xl">
+                        {item.step}
+                      </div>
+                      <h3 class="text-xl font-semibold text-white">
+                        {item.title}
+                      </h3>
+                      <p class="mt-2 text-dark-300">{item.description}</p>
+                    </GlassCard>
+                  )}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Package Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <GlassCard
+        class="relative overflow-hidden p-8 md:p-12"
+        hover={false}
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-accent-500/10 via-transparent to-primary-500/10"
+        >
+        </div>
+        <div class="relative grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <span
+              class="mb-4 inline-block rounded-full bg-accent-500/10 px-4 py-2 text-sm font-medium text-accent-400"
+            >
+              🎯 {t.services.customTitle}
+            </span>
+            <h2
+              class="font-display text-3xl uppercase tracking-wide text-white md:text-4xl"
+            >
+              Something Different?
+            </h2>
+            <p class="mt-4 text-lg text-dark-300">
+              {t.services.customDescription}
+            </p>
+            <div class="mt-8">
+              <Button href={`/${lang}/contact/`}>
+                {t.services.customCta}
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </Button>
+            </div>
+          </div>
+          <ImagePlaceholder
+            description="Image of an individual training session or consultation"
+            aspectRatio="landscape"
+            icon="image"
+            class="shadow-xl"
+          />
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        title="Frequently Asked Questions"
+        subtitle="Answers to the most common questions about my coaching."
+      />
+
+      <div class="mt-16 space-y-4">
+        {
+          [
+            {
+              question: 'Can I switch between packages?',
+              answer:
+                'Yes, you can upgrade or downgrade at any time. The new package will apply from the next billing period.',
+            },
+            {
+              question: 'How does online coaching work?',
+              answer:
+                'You receive your individual training plan in an app, regular video calls for technique checks, and direct support via WhatsApp or email.',
+            },
+            {
+              question: 'Do I need special equipment?',
+              answer:
+                "For online coaching, you need access to a gym or basic home equipment. We'll adapt the plan to your possibilities.",
+            },
+            {
+              question: 'How fast will I see results?',
+              answer:
+                'Most clients feel initial improvements in energy and wellbeing after 2-3 weeks. Visible physical changes typically show after 6-8 weeks.',
+            },
+            {
+              question: "What if I don't like the coaching?",
+              answer:
+                "I offer a 14-day money-back guarantee. If you're not satisfied, you get your money back – no questions asked.",
+            },
+          ].map((faq, index) => (
+            <details
+              class="glass group rounded-2xl transition-all open:bg-white/5"
+              style={`animation: fadeIn 0.5s ease-out ${index * 0.1}s both`}
+            >
+              <summary class="flex cursor-pointer items-center justify-between p-6 text-lg font-medium text-white">
+                {faq.question}
+                <svg
+                  class="h-5 w-5 shrink-0 text-dark-400 transition-transform group-open:rotate-180"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </summary>
+              <div class="px-6 pb-6 text-dark-300">{faq.answer}</div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="relative py-24 md:py-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <GlassCard
+        class="relative overflow-hidden p-8 text-center md:p-12 lg:p-16"
+        hover={false}
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10"
+        >
+        </div>
+        <div class="relative">
+          <h2
+            class="font-display text-3xl uppercase tracking-wide text-white md:text-4xl lg:text-5xl"
+          >
+            Start Your Transformation Today
+          </h2>
+          <p class="mx-auto mt-6 max-w-2xl text-lg text-dark-300">
+            Book your free initial consultation now and find out which package
+            suits you best.
+          </p>
+          <div class="mt-10">
+            <Button href={`/${lang}/contact/`} size="lg">
+              Get Free Consultation
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+</Layout>
+

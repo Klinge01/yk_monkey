@@ -1,0 +1,88 @@
+---
+interface Props {
+  description: string;
+  aspectRatio?: 'square' | 'video' | 'portrait' | 'landscape' | 'hero';
+  class?: string;
+  icon?: 'image' | 'video' | 'user' | 'gallery';
+}
+
+const {
+  description,
+  aspectRatio = 'landscape',
+  class: className = '',
+  icon = 'image',
+} = Astro.props;
+
+const aspectClasses = {
+  square: 'aspect-square',
+  video: 'aspect-video',
+  portrait: 'aspect-[3/4]',
+  landscape: 'aspect-[4/3]',
+  hero: 'aspect-[16/9] md:aspect-[21/9]',
+};
+
+const icons = {
+  image: `<svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>`,
+  video: `<svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+  </svg>`,
+  user: `<svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+  </svg>`,
+  gallery: `<svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+  </svg>`,
+};
+---
+
+<div
+  class:list={[
+    'group relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800 to-dark-900 border border-white/5',
+    aspectClasses[aspectRatio],
+    className,
+  ]}
+>
+  <!-- Gradient overlay -->
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10 opacity-50 transition-opacity group-hover:opacity-70"
+  >
+  </div>
+
+  <!-- Grid pattern -->
+  <div
+    class="absolute inset-0 opacity-10"
+    style="background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px); background-size: 20px 20px;"
+  >
+  </div>
+
+  <!-- Content -->
+  <div
+    class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center"
+  >
+    <div
+      class="mb-4 text-dark-400 transition-colors group-hover:text-primary-400"
+    >
+      <Fragment set:html={icons[icon]} />
+    </div>
+    <p class="text-sm font-medium text-dark-300 md:text-base">
+      {description}
+    </p>
+    <p class="mt-2 text-xs text-dark-500">
+      {aspectRatio === 'video' ? 'Video' : 'Image'} Placeholder
+    </p>
+  </div>
+
+  <!-- Corner accents -->
+  <div
+    class="absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-primary-500/30"
+  >
+  </div>
+  <div
+    class="absolute bottom-0 right-0 h-8 w-8 border-b-2 border-r-2 border-accent-500/30"
+  >
+  </div>
+</div>
+
+

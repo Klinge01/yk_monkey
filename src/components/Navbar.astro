@@ -1,0 +1,193 @@
+---
+import { getTranslation, type Language } from '@i18n/translations';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = getTranslation(lang);
+const alternateLang = lang === 'de' ? 'en' : 'de';
+const currentPath = Astro.url.pathname;
+const alternateUrl = currentPath.replace(`/${lang}`, `/${alternateLang}`);
+
+const navLinks = [
+  { href: `/${lang}/`, label: t.nav.home },
+  { href: `/${lang}/about/`, label: t.nav.about },
+  { href: `/${lang}/services/`, label: t.nav.services },
+  { href: `/${lang}/contact/`, label: t.nav.contact },
+];
+
+function isActive(href: string): boolean {
+  if (href === `/${lang}/`) {
+    return currentPath === `/${lang}/` || currentPath === `/${lang}`;
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<nav
+  class="glass-dark fixed left-0 right-0 top-0 z-50 transition-all duration-300"
+  id="navbar"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a
+        href={`/${lang}/`}
+        class="group flex items-center gap-3 transition-transform hover:scale-105"
+      >
+        <div
+          class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500"
+        >
+          <span class="font-display text-2xl font-bold text-white">YAK</span>
+        </div>
+        <span class="font-display text-2xl tracking-wide text-white"
+          >YAK<span class="gradient-text">COACHING</span></span
+        >
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden items-center gap-8 md:flex">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`relative py-2 text-sm font-medium transition-colors ${
+                isActive(link.href)
+                  ? 'text-primary-400'
+                  : 'text-dark-200 hover:text-white'
+              }`}
+            >
+              {link.label}
+              {isActive(link.href) && (
+                <span class="absolute -bottom-1 left-0 h-0.5 w-full bg-gradient-to-r from-primary-500 to-accent-500" />
+              )}
+            </a>
+          ))
+        }
+
+        <!-- Language Switcher -->
+        <a
+          href={alternateUrl}
+          class="glass flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-dark-200 transition-all hover:text-white"
+          onclick={`localStorage.setItem('preferred-language', '${alternateLang}')`}
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+            ></path>
+          </svg>
+          {alternateLang.toUpperCase()}
+        </a>
+
+        <!-- CTA Button -->
+        <a
+          href={`/${lang}/contact/`}
+          class="glow-hover rounded-full bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:from-primary-400 hover:to-primary-500"
+        >
+          {t.hero.cta}
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="flex h-10 w-10 items-center justify-center rounded-lg text-dark-200 transition-colors hover:text-white md:hidden"
+        id="mobile-menu-btn"
+        aria-label="Toggle menu"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          id="menu-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          class="hidden h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          id="close-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    class="glass-dark hidden border-t border-white/5 md:hidden"
+    id="mobile-menu"
+  >
+    <div class="space-y-1 px-4 py-4">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`block rounded-lg px-4 py-3 text-base font-medium transition-colors ${
+              isActive(link.href)
+                ? 'bg-primary-500/10 text-primary-400'
+                : 'text-dark-200 hover:bg-white/5 hover:text-white'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <div class="flex items-center gap-3 pt-4">
+        <a
+          href={alternateUrl}
+          class="glass flex-1 rounded-lg px-4 py-3 text-center text-sm font-medium text-dark-200 transition-colors hover:text-white"
+        >
+          🌐 {alternateLang === 'de' ? 'Deutsch' : 'English'}
+        </a>
+        <a
+          href={`/${lang}/contact/`}
+          class="flex-1 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-center text-sm font-semibold text-white"
+        >
+          {t.hero.cta}
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const navbar = document.getElementById('navbar');
+
+  // Toggle mobile menu
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Add background on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar?.classList.add('bg-dark-950/80');
+    } else {
+      navbar?.classList.remove('bg-dark-950/80');
+    }
+  });
+</script>
+
