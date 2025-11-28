@@ -1,9 +1,10 @@
 ---
 // Redirect to default language
-// Construct the redirect path with the base path included
+// For static builds, use Response.redirect() which works better than Astro.redirect()
+// Use a dummy origin since we only need the pathname - Astro will handle the base path
 const base = import.meta.env.BASE_URL || '/';
 const normalizedBase = base.endsWith('/') ? base : base + '/';
-return Astro.redirect(`${normalizedBase}de/`);
+return Response.redirect(new URL(`${normalizedBase}de/`, 'https://example.com'), 301);
 ---
 
 
