@@ -30,6 +30,8 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <!-- Allow favicon and assets to load - relaxed CSP for static site -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https:;" />
     <!-- Fix asset paths for GitHub Pages - runs immediately -->
     <script is:inline>
       // Fix all absolute asset paths for GitHub Pages
@@ -246,11 +248,15 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
       // Check if user is visiting root (with or without base path)
       const isRoot = currentPath === '/' || currentPath === basePathNormalized || currentPath === basePath.slice(0, -1);
       
-      if (isRoot) {
+      // Also check if user is on GitHub Pages but accessing /de/ or /en/ directly (without base path)
+      // This can happen if someone bookmarks or shares a link
+      const isDirectLangPath = (currentPath === '/de/' || currentPath === '/en/') && basePath !== '/';
+      
+      if (isRoot || isDirectLangPath) {
         const savedLang = localStorage.getItem('preferred-language');
 
         if (savedLang) {
-          window.location.href = `${basePathNormalized}${savedLang}/`;
+          window.location.replace(`${basePathNormalized}${savedLang}/`);
         } else {
           // Try to detect from browser language
           const browserLang = navigator.language || 'de';
@@ -258,7 +264,7 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
           const targetLang = langCode === 'de' ? 'de' : 'en';
 
           localStorage.setItem('preferred-language', targetLang);
-          window.location.href = `${basePathNormalized}${targetLang}/`;
+          window.location.replace(`${basePathNormalized}${targetLang}/`);
         }
       }
     </script>
