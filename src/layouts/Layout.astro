@@ -2,7 +2,6 @@
 import Navbar from '@components/Navbar.astro';
 import Footer from '@components/Footer.astro';
 import { getLanguageFromUrl } from '@i18n/translations';
-import { getBasePathFromAstroUrl, normalizeBasePath } from '@i18n/utils';
 
 interface Props {
   title: string;
@@ -11,17 +10,12 @@ interface Props {
 
 const { title, description = '' } = Astro.props;
 const lang = getLanguageFromUrl(Astro.url);
-// Detect base path at runtime (works for localhost, GitHub Pages, and production)
-const basePath = normalizeBasePath(getBasePathFromAstroUrl(Astro.url));
+// Get base path for GitHub Pages
+const base = import.meta.env.BASE_URL || '/';
+const basePath = base.endsWith('/') ? base : base + '/';
 const alternateLang = lang === 'de' ? 'en' : 'de';
-
-// Construct alternate URL: replace language in path while preserving base path
-let pathWithoutBase = Astro.url.pathname;
-if (basePath !== '/' && Astro.url.pathname.startsWith(basePath)) {
-  pathWithoutBase = '/' + Astro.url.pathname.slice(basePath.length);
-}
-let alternatePath = pathWithoutBase.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
-const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\//, '')}` : alternatePath;
+// Replace language in path while preserving base path
+const alternateUrl = Astro.url.pathname.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
 ---
 
 <!doctype html>
@@ -30,59 +24,7 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <!-- Allow favicon and assets to load - relaxed CSP for static site -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https:;" />
-    <!-- Fix asset paths for GitHub Pages - runs immediately -->
-    <script is:inline>
-      // Fix all absolute asset paths for GitHub Pages
-      // This must run synchronously before browser loads assets
-      (function() {
-        function getBasePath() {
-          const pathname = window.location.pathname;
-          if (pathname.startsWith('/yk_monkey/')) return '/yk_monkey/';
-          if (pathname.startsWith('/yk_monkey_public/')) return '/yk_monkey_public/';
-          return '/';
-        }
-        const basePath = getBasePath();
-        
-        if (basePath !== '/') {
-          // Intercept and fix link/script elements as they're added to head
-          const originalAppendChild = Node.prototype.appendChild;
-          const originalInsertBefore = Node.prototype.insertBefore;
-          
-          function fixAssetPath(element) {
-            if (element.tagName === 'LINK' && element.href) {
-              const href = element.getAttribute('href');
-              if (href && href.startsWith('/') && !href.startsWith(basePath) && !href.startsWith('//') && !href.startsWith('/http')) {
-                element.setAttribute('href', basePath + href.slice(1));
-              }
-            }
-            if (element.tagName === 'SCRIPT' && element.src) {
-              const src = element.getAttribute('src');
-              if (src && src.startsWith('/') && !src.startsWith(basePath) && !src.startsWith('//') && !src.startsWith('/http')) {
-                element.setAttribute('src', basePath + src.slice(1));
-              }
-            }
-          }
-          
-          Node.prototype.appendChild = function(child) {
-            fixAssetPath(child);
-            return originalAppendChild.call(this, child);
-          };
-          
-          Node.prototype.insertBefore = function(newNode, referenceNode) {
-            fixAssetPath(newNode);
-            return originalInsertBefore.call(this, newNode, referenceNode);
-          };
-          
-          // Fix existing elements in head
-          if (document.head) {
-            document.querySelectorAll('head link[href^="/"], head script[src^="/"]').forEach(fixAssetPath);
-          }
-        }
-      })();
-    </script>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${basePath}favicon.svg`} />
     <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
     <link rel="alternate" hreflang={lang} href={Astro.url.pathname} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -200,63 +142,21 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
       <Footer {lang} />
     </div>
 
-    <!-- Base path detection and root redirect script -->
-    <script is:inline>
-      // Detect base path at runtime from the current URL
-      function getBasePath() {
-        const pathname = window.location.pathname;
-        // Check for known GitHub Pages base paths
-        if (pathname.startsWith('/yk_monkey/')) return '/yk_monkey/';
-        if (pathname.startsWith('/yk_monkey_public/')) return '/yk_monkey_public/';
-        return '/';
-      }
-      
-      const basePath = getBasePath();
-      const basePathNormalized = basePath.endsWith('/') ? basePath : basePath + '/';
+    <!-- Language detection script -->
+    <script>
+      // Get base path from the page (e.g., '/ykmonkey/' or '/')
+      const basePath = import.meta.env.BASE_URL || '/';
       const currentPath = window.location.pathname;
-      
-      // Fix body content asset paths (videos, images, etc.)
-      if (basePath !== '/') {
-        function fixBodyAssets() {
-          // Fix video sources
-          const videoSources = document.querySelectorAll('source[src^="/"]');
-          videoSources.forEach(source => {
-            const src = source.getAttribute('src');
-            if (src && !src.startsWith(basePath) && !src.startsWith('//') && !src.startsWith('/http')) {
-              source.setAttribute('src', basePath + src.slice(1));
-            }
-          });
-          
-          // Fix image sources
-          const images = document.querySelectorAll('img[src^="/"]');
-          images.forEach(img => {
-            const src = img.getAttribute('src');
-            if (src && !src.startsWith(basePath) && !src.startsWith('//') && !src.startsWith('/http')) {
-              img.setAttribute('src', basePath + src.slice(1));
-            }
-          });
-        }
-        
-        // Run when DOM is ready
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', fixBodyAssets);
-        } else {
-          fixBodyAssets();
-        }
-      }
+      const basePathNormalized = basePath.endsWith('/') ? basePath : basePath + '/';
       
       // Check if user is visiting root (with or without base path)
       const isRoot = currentPath === '/' || currentPath === basePathNormalized || currentPath === basePath.slice(0, -1);
       
-      // Also check if user is on GitHub Pages but accessing /de/ or /en/ directly (without base path)
-      // This can happen if someone bookmarks or shares a link
-      const isDirectLangPath = (currentPath === '/de/' || currentPath === '/en/') && basePath !== '/';
-      
-      if (isRoot || isDirectLangPath) {
+      if (isRoot) {
         const savedLang = localStorage.getItem('preferred-language');
 
         if (savedLang) {
-          window.location.replace(`${basePathNormalized}${savedLang}/`);
+          window.location.href = `${basePathNormalized}${savedLang}/`;
         } else {
           // Try to detect from browser language
           const browserLang = navigator.language || 'de';
@@ -264,7 +164,7 @@ const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\/
           const targetLang = langCode === 'de' ? 'de' : 'en';
 
           localStorage.setItem('preferred-language', targetLang);
-          window.location.replace(`${basePathNormalized}${targetLang}/`);
+          window.location.href = `${basePathNormalized}${targetLang}/`;
         }
       }
     </script>

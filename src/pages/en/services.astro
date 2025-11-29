@@ -8,10 +8,9 @@ import { getTranslation } from '@i18n/translations';
 
 const lang = 'en';
 const t = getTranslation(lang);
-import { getBasePathFromAstroUrl, normalizeBasePath } from '@i18n/utils';
-
-// Detect base path at runtime (works for localhost, GitHub Pages, and production)
-const basePath = normalizeBasePath(getBasePathFromAstroUrl(Astro.url));
+// Get base path for links (needed for GitHub Pages)
+const base = import.meta.env.BASE_URL || '/';
+const basePath = base.endsWith('/') ? base : base + '/';
 ---
 
 <Layout

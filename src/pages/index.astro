@@ -1,45 +1,10 @@
 ---
 // Redirect to default language
-// Use client-side redirect to avoid conflicts with Astro's i18n middleware
-// The redirect script will handle base path detection for GitHub Pages
+// For static builds, use Response.redirect() which works better than Astro.redirect()
+// Use a dummy origin since we only need the pathname - Astro will handle the base path
+const base = import.meta.env.BASE_URL || '/';
+const normalizedBase = base.endsWith('/') ? base : base + '/';
+return Response.redirect(new URL(`${normalizedBase}de/`, 'https://example.com'), 301);
 ---
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting...</title>
-    <script is:inline>
-      // Detect base path at runtime
-      function getBasePath() {
-        const pathname = window.location.pathname;
-        if (pathname.startsWith('/yk_monkey/')) return '/yk_monkey/';
-        if (pathname.startsWith('/yk_monkey_public/')) return '/yk_monkey_public/';
-        return '/';
-      }
-      
-      const basePath = getBasePath();
-      const basePathNormalized = basePath.endsWith('/') ? basePath : basePath + '/';
-      
-      // Check for saved language preference
-      const savedLang = localStorage.getItem('preferred-language');
-      
-      if (savedLang) {
-        window.location.replace(`${basePathNormalized}${savedLang}/`);
-      } else {
-        // Try to detect from browser language
-        const browserLang = navigator.language || 'de';
-        const langCode = browserLang.split('-')[0].toLowerCase();
-        const targetLang = langCode === 'de' ? 'de' : 'en';
-        
-        localStorage.setItem('preferred-language', targetLang);
-        window.location.replace(`${basePathNormalized}${targetLang}/`);
-      }
-    </script>
-  </head>
-  <body>
-    <p>Redirecting...</p>
-  </body>
-</html>
 
 

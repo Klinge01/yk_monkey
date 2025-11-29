@@ -20,13 +20,23 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       
+      - name: Set BASE_PATH
+        id: set-base-path
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo "BASE_PATH=/${REPO_NAME}/" >> $GITHUB_ENV
+          echo "Repository name: ${REPO_NAME}"
+          echo "BASE_PATH: /${REPO_NAME}/"
+      
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
           path: . # The root location of your Astro project inside the repository. (optional)
           node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 18. (optional)
           package-manager: npm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on lockfile. (optional)
-          # Note: BASE_PATH is no longer needed - runtime detection handles GitHub Pages automatically
+        env:
+          # BASE_PATH is set in the previous step
+          BASE_PATH: ${{ env.BASE_PATH }}
 
   deploy:
     needs: build
