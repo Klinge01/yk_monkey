@@ -5,11 +5,12 @@ import Button from '@components/Button.astro';
 import SectionHeading from '@components/SectionHeading.astro';
 import { getTranslation } from '@i18n/translations';
 
+import { getBasePathFromAstroUrl, normalizeBasePath } from '@i18n/utils';
+
 const lang = 'en';
 const t = getTranslation(lang);
-// Get base path for assets and links (needed for GitHub Pages)
-const base = import.meta.env.BASE_URL || '/';
-const basePath = base.endsWith('/') ? base : base + '/';
+// Detect base path at runtime (works for localhost, GitHub Pages, and production)
+const basePath = normalizeBasePath(getBasePathFromAstroUrl(Astro.url));
 ---
 
 <Layout
@@ -116,7 +117,7 @@ const basePath = base.endsWith('/') ? base : base + '/';
               playsinline
               class="relative z-10 aspect-[3/4] w-full rounded-2xl object-cover shadow-2xl shadow-primary-500/20"
             >
-              <source src={`${base}videos/Montage_Chest_1.mp4`} type="video/mp4" />
+              <source src={`${basePath}videos/Montage_Chest_1.mp4`} type="video/mp4" />
             </video>
           </div>
         </div>

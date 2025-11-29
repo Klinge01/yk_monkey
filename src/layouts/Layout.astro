@@ -2,6 +2,7 @@
 import Navbar from '@components/Navbar.astro';
 import Footer from '@components/Footer.astro';
 import { getLanguageFromUrl } from '@i18n/translations';
+import { getBasePathFromAstroUrl, normalizeBasePath } from '@i18n/utils';
 
 interface Props {
   title: string;
@@ -10,12 +11,17 @@ interface Props {
 
 const { title, description = '' } = Astro.props;
 const lang = getLanguageFromUrl(Astro.url);
-// Get base path for GitHub Pages
-const base = import.meta.env.BASE_URL || '/';
-const basePath = base.endsWith('/') ? base : base + '/';
+// Detect base path at runtime (works for localhost, GitHub Pages, and production)
+const basePath = normalizeBasePath(getBasePathFromAstroUrl(Astro.url));
 const alternateLang = lang === 'de' ? 'en' : 'de';
-// Replace language in path while preserving base path
-const alternateUrl = Astro.url.pathname.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
+
+// Construct alternate URL: replace language in path while preserving base path
+let pathWithoutBase = Astro.url.pathname;
+if (basePath !== '/' && Astro.url.pathname.startsWith(basePath)) {
+  pathWithoutBase = '/' + Astro.url.pathname.slice(basePath.length);
+}
+let alternatePath = pathWithoutBase.replace(`/${lang}/`, `/${alternateLang}/`).replace(`/${lang}`, `/${alternateLang}/`);
+const alternateUrl = basePath !== '/' ? `${basePath}${alternatePath.replace(/^\//, '')}` : alternatePath;
 ---
 
 <!doctype html>
@@ -142,12 +148,53 @@ const alternateUrl = Astro.url.pathname.replace(`/${lang}/`, `/${alternateLang}/
       <Footer {lang} />
     </div>
 
-    <!-- Language detection script -->
-    <script>
-      // Get base path from the page (e.g., '/ykmonkey/' or '/')
-      const basePath = import.meta.env.BASE_URL || '/';
-      const currentPath = window.location.pathname;
+    <!-- Base path detection and link fixing script -->
+    <script is:inline>
+      // Detect base path at runtime from the current URL
+      function getBasePath() {
+        const pathname = window.location.pathname;
+        // Check for known GitHub Pages base paths
+        if (pathname.startsWith('/yk_monkey/')) return '/yk_monkey/';
+        if (pathname.startsWith('/yk_monkey_public/')) return '/yk_monkey_public/';
+        return '/';
+      }
+      
+      const basePath = getBasePath();
       const basePathNormalized = basePath.endsWith('/') ? basePath : basePath + '/';
+      const currentPath = window.location.pathname;
+      
+      // Fix all internal links to include base path if needed (runs immediately)
+      // This ensures links work correctly on GitHub Pages
+      if (basePath !== '/') {
+        // Use a function that runs immediately and also on DOMContentLoaded
+        function fixLinks() {
+          // Find all anchor tags with href starting with '/'
+          const links = document.querySelectorAll('a[href^="/"]');
+          links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith(basePath) && !href.startsWith('//') && !href.startsWith('/http')) {
+              // Only fix internal links (not external URLs or protocol-relative)
+              link.setAttribute('href', basePath + href.slice(1));
+            }
+          });
+          
+          // Also fix video sources and other assets
+          const videoSources = document.querySelectorAll('source[src^="/"]');
+          videoSources.forEach(source => {
+            const src = source.getAttribute('src');
+            if (src && !src.startsWith(basePath)) {
+              source.setAttribute('src', basePath + src.slice(1));
+            }
+          });
+        }
+        
+        // Run immediately if DOM is ready, otherwise wait
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', fixLinks);
+        } else {
+          fixLinks();
+        }
+      }
       
       // Check if user is visiting root (with or without base path)
       const isRoot = currentPath === '/' || currentPath === basePathNormalized || currentPath === basePath.slice(0, -1);

@@ -101,7 +101,7 @@ export const translations = {
         },
         {
           name: 'Premium',
-          price: '199',
+          price: '149',
           period: '/Monat',
           description: 'Kontinuierliche Betreuung für nachhaltige Ergebnisse.',
           features: [
@@ -115,7 +115,7 @@ export const translations = {
         },
         {
           name: 'Elite',
-          price: '349',
+          price: '249',
           period: '/Monat',
           description: 'Vollumfängliche Betreuung mit direktem Zugang zu mir.',
           features: [
@@ -123,7 +123,6 @@ export const translations = {
             'Permanenter Zugang',
             'Live Support bei Fragen',
             'Video-Calls nach Bedarf',
-            'Wettkampfvorbereitung',
           ],
           popular: false,
         },
@@ -279,7 +278,7 @@ export const translations = {
         },
         {
           name: 'Premium',
-          price: '199',
+          price: '149',
           period: '/month',
           description: 'Continuous support for sustainable results.',
           features: [
@@ -293,7 +292,7 @@ export const translations = {
         },
         {
           name: 'Elite',
-          price: '349',
+          price: '249',
           period: '/month',
           description: 'Full support with direct access to me.',
           features: [

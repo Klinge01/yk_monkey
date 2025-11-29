@@ -1,15 +1,16 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
-// Get base path from environment variable (for GitHub Pages) or use default
-// If deploying to GitHub Pages with a repo name like 'YAK_Site', set BASE_PATH=/YAK_Site/
-// If your repo is 'username.github.io', leave BASE_PATH empty or unset
-const base = process.env.BASE_PATH || '/';
-
+// Always use base: '/' for builds
+// Runtime base path detection handles GitHub Pages automatically
+// This allows the same build to work on:
+// - localhost (no base path)
+// - GitHub Pages (with /yk_monkey/ base path detected at runtime)
+// - Production (no base path)
 export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
-  base: base,
+  base: '/', // Always use root - runtime detection handles GitHub Pages
   build: {
     assets: 'assets'
   },
